@@ -41,6 +41,17 @@ This section describes how to install the plugin and get it working.
 1. Once Installed, if you want to manually change your domain, go to Tools > Domain Change
 1. If your domain changes, a notice will appear at the top of the admin screen with a link to the domain changing tool
 
+= Making your blog/site address automatically reflect your server's name =
+
+Add the following to your wp-config.php file:
+
+<code>
+define('WP_HOME', 'http://' . $_SERVER['SERVER_NAME']);
+define('WP_SITEURL', 'http://' . $_SERVER['SERVER_NAME']);
+</code>
+
+See http://codex.wordpress.org/Editing_wp-config.php#WordPress_address_.28URL.29 for more information.
+
 == Frequently Asked Questions ==
 
 = What does this plugin do precisely? =
