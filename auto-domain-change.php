@@ -4,7 +4,7 @@ Plugin Name: Automatic Domain Changer
 Plugin URI: http://www.nuagelab.com/wordpress-plugins/auto-domain-change
 Description: Automatically changes the domain of a WordPress blog
 Author: NuageLab <wordpress-plugins@nuagelab.com>
-Version: 0.0.1
+Version: 0.0.2
 License: GPLv2 or later
 Author URI: http://www.nuagelab.com/wordpress-plugins
 */
@@ -255,6 +255,7 @@ class auto_domain_change{
 
 
 			// Process all rows
+			$sfalse = serialize(false);
 			$ret = mysql_query('SELECT * FROM '.$t);
 			while ($row = mysql_fetch_assoc($ret)) {
 				$fields = array();
@@ -262,8 +263,8 @@ class auto_domain_change{
 				// Process all columns
 				foreach ($row as $k=>$v) {
 					$ov = $v;
-					$sv = unserialize($v);
-					if ($sv) {
+					$sv = @unserialize($v);
+					if (($sv !== false) || ($sv == $sfalse)) {
 						// Column value was serialized
 						$v = $sv;
 						$serialized = true;

@@ -2,7 +2,7 @@
 Contributors: nuagelab
 Tags: admin, domain change
 Requires at least: 3.0
-Tested up to: 3.5.1
+Tested up to: 3.5.2
 Stable tag: trunk
 License: GPLv2 or later
 
@@ -69,5 +69,9 @@ Yes, this plugin will be translated to french shortly. If you want to help with 
 == Changelog ==
 = 0.0.1 =
 * First released version. Tested internally with about 10 sites.
+
+= 0.0.2 =
+* Added error suppression on unserialize calls, as failing unserialize are normal and part of the game. Thanks to Kailey Lampert for pointing this out.
+* Added serialize(false) detection.
 
 == Upgrade Notice ==
