@@ -4,7 +4,7 @@ Plugin Name: Automatic Domain Changer
 Plugin URI: http://www.nuagelab.com/wordpress-plugins/auto-domain-change
 Description: Automatically changes the domain of a WordPress blog
 Author: NuageLab <wordpress-plugins@nuagelab.com>
-Version: 0.0.3
+Version: 0.0.4
 License: GPLv2 or later
 Author URI: http://www.nuagelab.com/wordpress-plugins
 */
@@ -32,6 +32,7 @@ class auto_domain_change{
 			self::$_instance->setup();
 			return true;
 		}
+		
 		return false;
 	} // boot()
 
@@ -59,6 +60,22 @@ class auto_domain_change{
 		// Check if the domain was changed
 		if (is_admin()) {
 			$this->check_domain_change();
+			
+			// Handle some actions
+			if (isset($_POST['action'])) {
+				require_once(ABSPATH .'wp-includes/pluggable.php');
+				
+				if (wp_verify_nonce($_POST['nonce'],$_POST['action'])) {
+					$parts = explode('+',$_POST['action']);
+					switch ($parts[0]) {
+						case 'backup-database':
+							return $this->do_backup();
+						default:
+							// ignore
+							break;
+					}
+				}
+			}			
 		}
 	} // setup()
 
@@ -143,6 +160,8 @@ class auto_domain_change{
 							return $this->do_change($_POST['old-domain'], $_POST['new-domain']);
 						}
 						break;
+					default:
+						// ignore
 				}
 			}
 		}
@@ -156,8 +175,8 @@ class auto_domain_change{
 		echo '<form method="post">';
 
 		$action = 'change-domain+'.uniqid();
+		
 		wp_nonce_field($action,'nonce');
-
 		echo '<input type="hidden" name="action" value="'.$action.'" />';
 
 		echo '<table class="form-table">';
@@ -184,6 +203,7 @@ class auto_domain_change{
 
 		echo '<tr valign="top">';
 		echo '<td colspan="2"><input type="checkbox" name="accept-terms" id="accept-terms" value="1" /> <label for="accept-terms"'.($error_terms?' style="color:red;font-weight:bold;"':'').'>'.__('I have backed up my database and will assume the responsability of any data loss or corruption.','auto-domain-change').'</label></td>';
+		//echo '<td colspan="2"><input type="checkbox" name="accept-terms" id="accept-terms" value="1" /> <label for="accept-terms"'.($error_terms?' style="color:red;font-weight:bold;"':'').'>'.__('I have <a id="adc-backup-button" href="">backed up my database</a> and will assume the responsability of any data loss or corruption.','auto-domain-change').'</label></td>';
 		echo '</tr>';
 
 		echo '</tbody></table>';
@@ -191,7 +211,22 @@ class auto_domain_change{
 		echo '<p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="'.esc_html(__('Change domain','auto-domain-change')).'"></p>';
 
 		echo '</form>';
-
+		
+		echo '<form method="post" id="adc-backup-db">';
+		$action = 'backup-database+'.uniqid();
+		wp_nonce_field($action,'nonce');
+		echo '<input type="hidden" name="action" value="'.$action.'" />';
+		echo '</form>';
+		echo <<<EOD
+<script>
+(function($){
+	$('#adc-backup-button').click(function(ev){
+		ev.preventDefault();
+		$('#adc-backup-db').submit();
+	});
+})(jQuery);
+</script>	
+EOD;
 		echo '</div>';
 	} // admin_page()
 
@@ -255,29 +290,18 @@ class auto_domain_change{
 
 
 			// Process all rows
-			$sfalse = serialize(false);
 			$ret = mysql_query('SELECT * FROM '.$t);
 			while ($row = mysql_fetch_assoc($ret)) {
 				$fields = array();
 				$sets = array();
+				
 				// Process all columns
 				foreach ($row as $k=>$v) {
+					// Save original value
 					$ov = $v;
-					$sv = @unserialize($v);
-					if (($sv !== false) || ($sv == $sfalse)) {
-						// Column value was serialized
-						$v = $sv;
-						$serialized = true;
-					} else {
-						// Column value was not serialized
-						$serialized = false;
-					}
-
-					// Replace
-					$this->replace($v, $old, $new);
-
-					// Reserialize if needed
-					if ($serialized) $v = serialize($v);
+					
+					// Process value
+					$v = $this->processValue($v, $old, $new);
 
 					// If value changed, replace it
 					if ($ov != $v) {
@@ -298,6 +322,104 @@ class auto_domain_change{
 		echo '<hr>';
 		echo '<form method="post"><input type="submit" value="'.esc_html(__('Back','auto-domain-change')).'" />';
 	} // do_change()
+	
+	
+	private function processValue($v, $old, $new) 
+	{
+		$sfalse = serialize(false);
+		$jfalse = json_encode(false);
+		$jnull = json_encode(null);
+	
+		$sv = @unserialize($v);
+		$jv = @json_decode($v);
+		$serialized = $json = false;
+		if (($sv !== false) || ($sv == $sfalse)) {
+			// Column value was serialized
+			$v = $sv;
+			$serialized = true;
+		} else if (($jv !== null) && ($jv != $v) && ($jv != $jfalse) && ($jv != $jnull)) {
+			// Column value was JSON encoded
+			$v = $jv;
+			$json = true;
+		} /*else {
+			// Column value was not serialized
+		}*/
+
+		if (($serialized) && (is_string($v))) {
+			// Reprocess in case of double serialize done by sketchy plugins
+			$v = $this->processValue();
+		} else {
+			// Replace
+			$this->replace($v, $old, $new);
+		}
+
+		// Reserialize if needed
+		if ($serialized) $v = serialize($v);
+		elseif ($json) $v = json_encode($v);
+		
+		return $v;
+	}
+	
+	/**
+	 * Change domain. This is where the magic happens.
+	 * Called by admin_page() upon form submission.
+	 *
+	 * @author	Tommy Lacroix <tlacroix@nuagelab.com>
+	 * @access	private
+	 */
+	private function do_backup()
+	{
+		global $wpdb;
+
+		@set_time_limit(0);
+
+		$fn = preg_replace('/[^a-zA-Z0-9_\-]/', '_', preg_replace(',http(|s)://,i','',get_bloginfo('url'))).'-'.date('Ymd-His').'.sql';
+		
+		header('Content-Type: text/plain; charset="UTF-8"');
+		header('Content-Disposition: attachment; filename="'.$fn.'"');
+
+		mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
+		mysql_select_db(DB_NAME);
+		mysql_query('SET NAMES '.DB_CHARSET);
+		if (function_exists('mysql_set_charset')) mysql_set_charset(DB_CHARSET);
+
+		$ret = mysql_query('SHOW TABLES;');
+		$tables = array();
+		while ($row = mysql_fetch_assoc($ret)) {
+			$row = array_values($row);
+			$tables [] = reset($row);
+		}
+
+		foreach ($tables as $t) {
+			// Skip if the table name doesn't match the wordpress prefix
+			if (substr($t,0,strlen($wpdb->prefix)) != $wpdb->prefix) continue;
+
+			// Get table indices
+			$ret = mysql_query('SHOW CREATE TABLE '.$t);
+			$id = null;
+			while ($row = mysql_fetch_assoc($ret)) {
+				$ct = $row['Create Table'];
+				echo $ct.';'.PHP_EOL;
+			}
+
+			// Process all rows
+			$ret = mysql_query('SELECT * FROM '.$t);
+			while ($row = mysql_fetch_assoc($ret)) {
+				$ak = array();
+				$av = array();
+				foreach ($row as $k=>$v) {
+					$ak[] = '`'.mysql_real_escape_string($k).'`';
+					if ($v === null) $av[] = 'NULL';
+						else $av[] = '"'.mysql_real_escape_string($v).'"';
+				}
+				printf('INSERT INTO `%1$s` (%2$s) VALUES (%3$s);'.PHP_EOL, $t, implode(',',$ak), implode(',', $av));
+			}
+			echo PHP_EOL;
+			echo PHP_EOL;
+		}
+		
+		die;
+	} // do_backup()
 
 
 	/**

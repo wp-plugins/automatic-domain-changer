@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Auto Domain Changer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-25 14:27-0500\n"
-"PO-Revision-Date: 2013-03-25 14:27-0500\n"
+"POT-Creation-Date: 2014-09-17 10:31-0500\n"
+"PO-Revision-Date: 2014-09-17 10:31-0500\n"
 "Last-Translator: Tommy Lacroix <tlacroix@nuagelab.com>\n"
 "Language-Team: NuageLab <wordpress-plugins@nuagelab.com>\n"
 "Language: fr_FR\n"
@@ -23,7 +23,7 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;_n\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../auto-domain-change.php:99
+#: ../auto-domain-change.php:118
 #, php-format
 msgid ""
 "The domain name of your WordPress blog appears to have changed! <a href="
@@ -34,23 +34,23 @@ msgstr ""
 "\">Cliquez ici pour mettre à jour vos paramètres</a> ou <a href=\"%2$s"
 "\">ignorer</a>."
 
-#: ../auto-domain-change.php:114 ../auto-domain-change.php:150
+#: ../auto-domain-change.php:134 ../auto-domain-change.php:174
 msgid "Change Domain"
 msgstr "Changer le domaine"
 
-#: ../auto-domain-change.php:160
+#: ../auto-domain-change.php:185
 msgid "Change domain from: "
 msgstr "Changer le domaine de :"
 
-#: ../auto-domain-change.php:165
+#: ../auto-domain-change.php:190
 msgid "Change domain to: "
 msgstr "Changer le domaine à :"
 
-#: ../auto-domain-change.php:171
+#: ../auto-domain-change.php:196
 msgid "Also change secure <code>https</code> links"
 msgstr "Changer également les liens sécurisés <code>https</code>"
 
-#: ../auto-domain-change.php:176
+#: ../auto-domain-change.php:201
 msgid ""
 "Change both <code>www.old-domain.com</code> and <code>old-domain.com</code> "
 "links"
@@ -58,7 +58,7 @@ msgstr ""
 "Changer les liens de type <code>www.old-domain.com</code> et <code>old-"
 "domain.com</code>"
 
-#: ../auto-domain-change.php:180
+#: ../auto-domain-change.php:205
 msgid ""
 "I have backed up my database and will assume the responsability of any data "
 "loss or corruption."
@@ -66,31 +66,31 @@ msgstr ""
 "J'ai fait une copie de sauvegarde de ma base de données et j'assume toute "
 "responsabilité en cas de perte ou de corruption de données."
 
-#: ../auto-domain-change.php:185
+#: ../auto-domain-change.php:211
 msgid "Change domain"
 msgstr "Changer le domaine"
 
-#: ../auto-domain-change.php:211
+#: ../auto-domain-change.php:252
 #, php-format
 msgid "Old domain: %1$s"
 msgstr "Ancien domaine : %1$s"
 
-#: ../auto-domain-change.php:212
+#: ../auto-domain-change.php:253
 #, php-format
 msgid "New domain: %1$s"
 msgstr "Nouveau domaine : %1$s"
 
-#: ../auto-domain-change.php:244
+#: ../auto-domain-change.php:285
 #, php-format
 msgid "Skipping table %1$s because no unique id"
 msgstr ""
 "La table %1$s a été ignorée car elle ne contient pas d'identifiants uniques"
 
-#: ../auto-domain-change.php:248
+#: ../auto-domain-change.php:289
 #, php-format
 msgid "Processing table %1$s"
 msgstr "Traitement de la table %1$s"
 
-#: ../auto-domain-change.php:292
+#: ../auto-domain-change.php:343
 msgid "Back"
 msgstr "Retour"

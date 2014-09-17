@@ -74,4 +74,12 @@ Yes, this plugin will be translated to french shortly. If you want to help with 
 * Added error suppression on unserialize calls, as failing unserialize are normal and part of the game. Thanks to Kailey Lampert for pointing this out.
 * Added serialize(false) detection.
 
+= 0.0.3 =
+* Tested plugin up to WordPress 3.8.0
+
+= 0.0.4 =
+* Added JSON detection to fix values not being handled for plugins like RevSlider (thanks to Alfred Dagenais for letting us know about this issue)
+* Added double serialize detection for plugins like Global Content Blocks (thanks to pixelkicks for letting us know about this issue)
+* Tested plugin up to WordPress 4.0.0
+
 == Upgrade Notice ==
