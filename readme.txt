@@ -2,7 +2,7 @@
 Contributors: nuagelab
 Tags: admin, domain change
 Requires at least: 3.0
-Tested up to: 3.9.1
+Tested up to: 4.0.0
 Stable tag: trunk
 License: GPLv2 or later
 
@@ -15,8 +15,6 @@ This plugin automatically detects a domain name change, and updates all the Word
 = Features =
 
 * Easily migrate a WordPress site from one domain to another
-
-Note: NuageLab collects usage information about this plugin so that we can better serve our customers and know what features to add. By installing and activating this plugin, you agree to these terms.
 
 == Installation ==
 
@@ -79,7 +77,7 @@ Yes, this plugin will be translated to french shortly. If you want to help with 
 
 = 0.0.4 =
 * Added JSON detection to fix values not being handled for plugins like RevSlider (thanks to Alfred Dagenais for letting us know about this issue)
-* Added double serialize detection for plugins like Global Content Blocks (thanks to pixelkicks for letting us know about this issue)
+* Added double serialize detection for plugins like Global Content Blocks (thanks to @pixelkicks for letting us know about this issue)
 * Tested plugin up to WordPress 4.0.0
 
 == Upgrade Notice ==
