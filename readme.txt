@@ -2,7 +2,7 @@
 Contributors: nuagelab
 Tags: admin, domain change
 Requires at least: 3.0
-Tested up to: 4.0.0
+Tested up to: 4.1.1
 Stable tag: trunk
 License: GPLv2 or later
 
@@ -79,5 +79,13 @@ Yes, this plugin will be translated to french shortly. If you want to help with 
 * Added JSON detection to fix values not being handled for plugins like RevSlider (thanks to Alfred Dagenais for letting us know about this issue)
 * Added double serialize detection for plugins like Global Content Blocks (thanks to @pixelkicks for letting us know about this issue)
 * Tested plugin up to WordPress 4.0.0
+
+= 0.0.5 =
+* Minor text change
+
+= 0.0.6 =
+* Bug fix with the processValue function generating a warning (thanks to @sniemetz for letting us know about this issue)
+* Slovak translation (thanks to Marek Letko)
+* Tested up to 4.1.1
 
 == Upgrade Notice ==
