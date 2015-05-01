@@ -2,7 +2,7 @@
 Contributors: nuagelab
 Tags: admin, domain change
 Requires at least: 3.0
-Tested up to: 4.1.1
+Tested up to: 4.2.1
 Stable tag: trunk
 License: GPLv2 or later
 
