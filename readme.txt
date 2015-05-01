@@ -88,4 +88,7 @@ Yes, this plugin will be translated to french shortly. If you want to help with 
 * Slovak translation (thanks to Marek Letko)
 * Tested up to 4.1.1
 
+= 1.0 =
+* Tested up to 4.2.1
+
 == Upgrade Notice ==
