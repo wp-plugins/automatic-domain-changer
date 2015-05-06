@@ -1,6 +1,7 @@
 === Automatic Domain Changer ===
 Contributors: nuagelab
-Tags: admin, domain change
+Donate link: http://www.nuagelab.com/products/wordpress-plugins/
+Tags: admin, administration, links, resources, domain change, migration
 Requires at least: 3.0
 Tested up to: 4.2.1
 Stable tag: trunk
@@ -15,10 +16,26 @@ This plugin automatically detects a domain name change, and updates all the Word
 = Features =
 
 * Easily migrate a WordPress site from one domain to another
+* Migrate www.domain.com and domain.com at once
+* Migrate http and https links at once
+
+= Feedback =
+* We are open for your suggestions and feedback - Thank you for using or trying out one of our plugins!
+* Drop us a line [@nuagelab](http://twitter.com/#!/nuagelab) on Twitter
+* Follow us on [our Facebook page](https://www.facebook.com/pages/NuageLab/150091288388352)
+* Drop us a line at [wordpress-plugins@nuagelab.com](mailto:wordpress-plugins@nuagelab.com)
+
+= More =
+* [Also see our other plugins](http://www.nuagelab.com/products/wordpress-plugins/) or see [our WordPress.org profile page](http://profiles.wordpress.org/users/nuagelab/)
 
 == Installation ==
 
 This section describes how to install the plugin and get it working.
+
+= Requirements =
+
+* The PHP CURL extension, usually installed on Un*x, Mac and Windows environments. See "Installing CURL on Linux" below for more help.
+* Capability for your server to communicate with the outside work (or more specifically, to communicate with our servers)
 
 = Installing the Plugin =
 
@@ -92,3 +109,10 @@ Yes, this plugin will be translated to french shortly. If you want to help with 
 * Tested up to 4.2.1
 
 == Upgrade Notice ==
+
+== Translations ==
+
+* English
+* French
+* Spanish
+* Slovak
