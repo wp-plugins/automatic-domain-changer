@@ -3,7 +3,7 @@ Contributors: nuagelab
 Donate link: http://www.nuagelab.com/products/wordpress-plugins/
 Tags: admin, administration, links, resources, domain change, migration
 Requires at least: 3.0
-Tested up to: 4.2.1
+Tested up to: 4.2.2
 Stable tag: trunk
 License: GPLv2 or later
 
@@ -82,31 +82,35 @@ Yes, this plugin will be translated to french shortly. If you want to help with 
 1. The domain change and admin notice
 
 == Changelog ==
-= 0.0.1 =
-* First released version. Tested internally with about 10 sites.
+= 1.0.1 =
+* Tested up to 4.2.2
 
-= 0.0.2 =
-* Added error suppression on unserialize calls, as failing unserialize are normal and part of the game. Thanks to Kailey Lampert for pointing this out.
-* Added serialize(false) detection.
-
-= 0.0.3 =
-* Tested plugin up to WordPress 3.8.0
-
-= 0.0.4 =
-* Added JSON detection to fix values not being handled for plugins like RevSlider (thanks to Alfred Dagenais for letting us know about this issue)
-* Added double serialize detection for plugins like Global Content Blocks (thanks to @pixelkicks for letting us know about this issue)
-* Tested plugin up to WordPress 4.0.0
-
-= 0.0.5 =
-* Minor text change
+= 1.0 =
+* Tested up to 4.2.1
 
 = 0.0.6 =
 * Bug fix with the processValue function generating a warning (thanks to @sniemetz for letting us know about this issue)
 * Slovak translation (thanks to Marek Letko)
 * Tested up to 4.1.1
 
-= 1.0 =
-* Tested up to 4.2.1
+= 0.0.5 =
+* Minor text change
+
+= 0.0.4 =
+* Added JSON detection to fix values not being handled for plugins like RevSlider (thanks to Alfred Dagenais for letting us know about this issue)
+* Added double serialize detection for plugins like Global Content Blocks (thanks to @pixelkicks for letting us know about this issue)
+* Tested plugin up to WordPress 4.0.0
+
+= 0.0.3 =
+* Tested plugin up to WordPress 3.8.0
+
+= 0.0.2 =
+* Added error suppression on unserialize calls, as failing unserialize are normal and part of the game. Thanks to Kailey Lampert for pointing this out.
+* Added serialize(false) detection.
+
+= 0.0.1 =
+* First released version. Tested internally with about 10 sites.
+
 
 == Upgrade Notice ==
 
