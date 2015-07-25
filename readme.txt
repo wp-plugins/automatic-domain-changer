@@ -3,7 +3,7 @@ Contributors: nuagelab
 Donate link: http://www.nuagelab.com/products/wordpress-plugins/
 Tags: admin, administration, links, resources, domain change, migration
 Requires at least: 3.0
-Tested up to: 4.2.2
+Tested up to: 4.2.3
 Stable tag: trunk
 License: GPLv2 or later
 
